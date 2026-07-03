@@ -1,0 +1,150 @@
+/* ============================================================
+   Content Page CSS
+   ============================================================ */
+
+/* Theme section - Fixed background and text colors */
+.content-theme-box {
+  background: linear-gradient(135deg, #0b2740 0%, #103c61 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8) var(--space-8);
+  box-shadow: var(--shadow-md);
+  color: #ffffff !important;
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 575px) {
+  .content-theme-box {
+    padding: var(--space-6) var(--space-4);
+    border-radius: var(--radius-lg);
+  }
+}
+.content-theme-box::after {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(13, 127, 165, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.content-theme-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+  z-index: 1;
+}
+.content-theme-chip {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 14px;
+  background: rgba(13, 127, 165, 0.35);
+  border: 1.5px solid #38bdf8;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #38bdf8 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.content-theme-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #ffffff !important;
+  line-height: 1.35;
+}
+.content-theme-sub {
+  color: #facc15 !important;
+  display: inline;
+}
+.content-theme-desc {
+  font-size: 1.0rem;
+  color: rgba(255, 255, 255, 0.85) !important;
+  line-height: 1.8;
+  max-width: 750px;
+}
+
+/* Areas */
+.areas-intro { font-size: 1.0rem; color: var(--slate); margin-bottom: var(--space-5); line-height: 1.7; }
+.areas-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 576px)  { .areas-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px)  { .areas-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .areas-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.area-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.area-card:hover { border-color: var(--teal); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.area-num { font-family: var(--font-display); font-size: 0.95rem; font-weight: 800; color: var(--teal); background: var(--teal-light); padding: 4px 10px; border-radius: var(--radius-sm); }
+.area-label { font-size: 0.95rem; font-weight: 600; color: var(--navy); line-height: 1.5; }
+
+/* Technical Levels */
+.tech-intro { font-size: 1.0rem; color: var(--slate); margin-bottom: var(--space-5); line-height: 1.7; }
+.tech-levels { display: flex; flex-direction: column; gap: 0; }
+
+.req-level-body { flex: 1; }
+.req-level-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: var(--space-3);
+}
+.req-level-list { display: flex; flex-direction: column; gap: var(--space-3); }
+.req-level-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: 0.95rem;
+  color: var(--slate);
+  line-height: 1.6;
+}
+.req-item-bullet {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+/* Criteria */
+.criteria-intro { font-size: 1.0rem; color: var(--slate); margin-bottom: var(--space-5); line-height: 1.7; }
+.criteria-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: var(--transition);
+}
+.criteria-card:hover { background: var(--teal-light); border-color: var(--teal); }
+.criteria-bullet { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 8px; }
+.criteria-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.criteria-desc { font-size: 0.95rem; color: var(--slate); line-height: 1.6; }

@@ -1,0 +1,57 @@
+/* Schedule Page CSS */
+
+.schedule-intro {
+  font-size: 1.0rem;
+  color: var(--navy);
+  line-height: 1.75;
+}
+.schedule-intro strong { color: var(--teal); }
+
+/* Phase badges */
+.phase-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.phase-teal  { background: var(--teal-light); color: var(--teal); }
+.phase-slate { background: #eef2f5; color: var(--slate); }
+.phase-amber { background: var(--amber-light); color: #8a6200; }
+.phase-navy  { background: rgba(11,39,64,.08); color: var(--navy); }
+.phase-final { background: linear-gradient(90deg,#fffbe6,#fdedc9); color: #8a6200; border: 1px solid #f0d68a; }
+
+.schedule-time-cell { display: flex; flex-direction: column; }
+.schedule-date { font-weight: 700; font-size: 1.0rem; color: var(--teal); white-space: nowrap; }
+
+.executor-chip {
+  display: inline-block;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--slate);
+}
+
+/* Timeline */
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.timeline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: 4px;
+}
+.timeline-result {
+  font-size: 0.95rem;
+  color: var(--teal);
+  font-weight: 600;
+}

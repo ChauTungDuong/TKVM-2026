@@ -1,0 +1,90 @@
+/* Rules Page CSS */
+
+.rules-register-desc {
+  font-size: 1.1rem;
+  color: var(--slate);
+  line-height: 1.75;
+  margin-bottom: var(--space-5);
+}
+.rules-register-desc strong { color: var(--navy); }
+
+.register-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+.register-link-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.register-link-label { font-size: 0.95rem; color: var(--slate); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.register-link {
+  font-size: 1.1rem;
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: underline;
+  word-break: break-all;
+}
+.register-link:hover { color: var(--navy); }
+
+.qr-mini-row { display: flex; align-items: center; gap: var(--space-4); }
+.qr-mini { width: 80px; height: 80px; object-fit: contain; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 4px; }
+.qr-mini-label { font-size: 1.05rem; color: var(--slate); }
+
+/* Accordion round colors */
+.round-teal .accordion-trigger.open { background: var(--teal); }
+.round-amber .accordion-trigger { }
+.round-amber .accordion-trigger.open { background: var(--navy); }
+.round-navy .accordion-trigger.open { background: var(--navy-mid); }
+
+.accordion-title { display: flex; align-items: center; gap: var(--space-3); }
+.accordion-round-icon { font-size: 1.2rem; }
+
+.accordion-desc {
+  font-size: 1.0rem;
+  color: var(--slate);
+  line-height: 1.7;
+  margin-bottom: var(--space-4);
+  font-style: italic;
+}
+.accordion-list { display: flex; flex-direction: column; gap: var(--space-3); }
+.accordion-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: 0.95rem;
+  color: var(--ink);
+  line-height: 1.65;
+}
+.accordion-bullet {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+.accordion-result {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  background: var(--teal-light);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--navy);
+  border-left: 3px solid var(--teal);
+}
+.accordion-result-label {
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+/* Prize desc */
+.prize-desc {
+  font-size: 0.9rem;
+  color: var(--slate);
+  margin-top: 4px;
+  line-height: 1.4;
+}

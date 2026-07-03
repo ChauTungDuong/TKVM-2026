@@ -1,0 +1,51 @@
+/* Venue Page CSS */
+
+.venue-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .venue-grid { grid-template-columns: 1fr 1.2fr; }
+}
+
+.venue-info { display: flex; flex-direction: column; gap: var(--space-5); }
+
+.venue-icon-teal { color: var(--teal); flex-shrink: 0; }
+
+.venue-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: var(--space-1);
+}
+.venue-address {
+  font-size: 0.95rem;
+  color: var(--slate);
+  margin-bottom: var(--space-5);
+  line-height: 1.65;
+}
+.venue-maps-btn { display: inline-flex; margin-top: var(--space-1); }
+
+.venue-note-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-left: var(--space-4);
+  list-style: disc;
+  color: var(--navy);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+.venue-note-list li::marker { color: var(--teal); }
+
+.venue-map-wrapper {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  height: 100%;
+  min-height: 420px;
+}
