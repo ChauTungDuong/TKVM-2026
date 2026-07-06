@@ -17,14 +17,16 @@ export default function Footer() {
             <p className="footer-tagline">
               Cuộc thi Thiết kế Vi mạch<br />Bảo mật và An toàn Thông tin
             </p>
-            <a
-              href={`mailto:${CONTEST.contactEmail}`}
-              className="footer-contact-link"
-              id="footer-email-link"
-            >
-              <Mail size={15} />
-              {CONTEST.contactEmail}
-            </a>
+            {CONTEST.contactEmail && (
+              <a
+                href={`mailto:${CONTEST.contactEmail}`}
+                className="footer-contact-link"
+                id="footer-email-link"
+              >
+                <Mail size={15} />
+                {CONTEST.contactEmail}
+              </a>
+            )}
           </div>
 
           {/* ── Col 2: Nav ── */}
@@ -47,10 +49,12 @@ export default function Footer() {
                 <MapPin size={15} className="footer-contact-icon" />
                 <span>{venue.name}, {venue.address}</span>
               </div>
-              <div className="footer-contact-item">
-                <Mail size={15} className="footer-contact-icon" />
-                <a href={`mailto:${CONTEST.contactEmail}`}>{CONTEST.contactEmail}</a>
-              </div>
+              {CONTEST.contactEmail && (
+                <div className="footer-contact-item">
+                  <Mail size={15} className="footer-contact-icon" />
+                  <a href={`mailto:${CONTEST.contactEmail}`}>{CONTEST.contactEmail}</a>
+                </div>
+              )}
             </div>
           </div>
 

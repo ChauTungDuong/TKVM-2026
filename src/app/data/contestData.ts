@@ -9,7 +9,7 @@ export const CONTEST = {
   year: '2026',
   dateRange: 'Tháng 6/2026 – Tháng 10/2026',
   registerUrl: 'https://bit.ly/4nWUfCQ',
-  contactEmail: 'tkvm@actvn.edu.vn',
+  contactEmail: '', // Tạm thời bỏ email theo yêu cầu (sau này sẽ thêm vào)
   finalDate: new Date('2026-10-20T00:00:00'),
 };
 
