@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { rounds, prizes, CONTEST } from '../data/contestData';
+import { rounds, CONTEST } from '../data/contestData';
 import './Rules.css';
 
 export default function Rules() {
@@ -84,24 +84,6 @@ export default function Rules() {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* ══════ CƠ CẤU GIẢI THƯỞNG ══════════════════════════ */}
-      <section className="section-block" aria-labelledby="prizes-section-heading">
-        <div className="section-heading">
-          <div className="section-heading-dot" />
-          <h2 id="prizes-section-heading">Cơ cấu giải thưởng</h2>
-        </div>
-        <div className="prize-grid">
-          {prizes.map(p => (
-            <div key={p.rank} className={`prize-card ${p.type}`}>
-              <div className="prize-icon">{p.icon}</div>
-              <p className="prize-name">{p.rank}</p>
-              <p className="prize-qty">× {p.qty} giải</p>
-              <p className="prize-desc">{p.desc}</p>
-            </div>
-          ))}
         </div>
       </section>
     </div>

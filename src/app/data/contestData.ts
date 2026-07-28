@@ -185,5 +185,7 @@ export const navLinks = [
   { label: 'Thời gian', path: '/thoigian' },
   { label: 'Hình thức thi', path: '/hinhthuc' },
   { label: 'Nội dung', path: '/noidung' },
+  { label: 'Giải thưởng', path: '/giaithuong' },
+  { label: 'Nộp sản phẩm', path: '/nop-san-pham' },
   { label: 'Địa điểm', path: '/diadiem' },
 ];

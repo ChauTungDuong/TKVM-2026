@@ -31,7 +31,7 @@ export default function Header() {
             </svg>
           </div>
           <div className="logo-text">
-            <span className="logo-name">TKVM <span className="logo-year">2026</span></span>
+            <span className="logo-name">ICD <span className="logo-year">2026</span></span>
             <span className="logo-sub">Thiết kế Vi mạch Bảo mật</span>
           </div>
         </Link>

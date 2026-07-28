@@ -11,7 +11,7 @@ export default function Footer() {
           {/* ── Col 1: Brand ── */}
           <div className="footer-brand">
             <div className="footer-logo">
-              <span className="footer-logo-name">TKVM</span>
+              <span className="footer-logo-name">ICD</span>
               <span className="footer-logo-year">2026</span>
             </div>
             <p className="footer-tagline">

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: icd2026-backend
+    restart: unless-stopped
+    ports:
+      - "3030:3000"
+    volumes:
+      # Ánh xạ thư mục uploads ra ngoài để file không bị mất khi khởi động lại container
+      - ./server/uploads:/app/uploads
+      # Ánh xạ database.sqlite ra ngoài để dữ liệu được lưu vĩnh viễn
+      - ./server/database.sqlite:/app/database.sqlite

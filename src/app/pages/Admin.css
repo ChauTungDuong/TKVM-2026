@@ -1,0 +1,180 @@
+.admin-login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.admin-dashboard {
+  min-height: 100vh;
+  background: var(--off-white);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-dashboard .section-block {
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: var(--space-6);
+  margin: var(--space-6);
+  border-top: 5px solid var(--teal);
+  flex: 1;
+}
+
+.admin-login-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb; /* Light gray background to make the white form stand out */
+}
+
+.admin-login-container {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg);
+  padding: var(--space-8) var(--space-6);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: left;
+}
+
+.admin-login-action {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+.admin-login-action .btn {
+  width: 100%;
+  justify-content: center;
+  font-size: 1.1rem;
+  padding: 12px 24px;
+}
+
+.admin-header {
+  background-color: var(--navy);
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.admin-header .page-title {
+  color: #ffffff;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.admin-header .btn-outline {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+.admin-header .btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-table th {
+  background-color: var(--bg-soft);
+  color: var(--navy);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-table tbody tr:hover {
+  background-color: var(--bg-soft);
+}
+
+.download-link {
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.download-link:hover {
+  color: var(--navy);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.admin-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+.admin-search {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 300px;
+}
+.admin-sort select {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-left: 8px;
+}
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: var(--space-4);
+}
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.pagination button.active {
+  background: var(--navy);
+  color: white;
+}
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
