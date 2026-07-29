@@ -103,33 +103,52 @@
   border-collapse: collapse;
   text-align: left;
   font-size: 0.95rem;
+  background-color: #ffffff;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .admin-table th,
 .admin-table td {
-  padding: 12px 16px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--border);
 }
 
 .admin-table th {
-  background-color: var(--bg-soft);
-  color: var(--navy);
+  background-color: var(--navy);
+  color: #ffffff;
   font-weight: 600;
   white-space: nowrap;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
 }
 
 .admin-table tbody tr:hover {
-  background-color: var(--bg-soft);
+  background-color: #e0f2fe;
 }
 
 .download-link {
-  color: var(--teal);
+  display: inline-block;
+  background-color: var(--teal);
+  color: #ffffff !important;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.85rem;
   font-weight: 600;
-  text-decoration: underline;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2);
 }
 
 .download-link:hover {
-  color: var(--navy);
+  background-color: #0f766e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(13, 148, 136, 0.3);
 }
 
 .text-center {
@@ -144,12 +163,39 @@
   flex-wrap: wrap;
   gap: var(--space-4);
 }
+
+.admin-search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px; /* Made wider */
+}
+
 .admin-search {
-  padding: 8px 12px;
+  padding: 10px 36px 10px 14px; /* Added right padding for icon */
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   width: 100%;
-  max-width: 300px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.admin-search:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(32, 201, 151, 0.2);
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 .admin-sort select {
   padding: 8px 12px;

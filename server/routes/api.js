@@ -4,12 +4,19 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { submitProduct, getSubmissions } from '../controllers/submissionController.js';
-import { login, verifyToken } from '../controllers/authController.js';
-
+import { login, verifyToken, verifyAdmin, refreshToken, logOut } from '../controllers/authController.js';
+import rateLimit from 'express-rate-limit'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const router = express.Router();
 
+const loginLimiter = rateLimit({
+  windowMs: 5*60*1000,
+  max:5,
+  message: {
+    error: 'Too many login attempts. Please try again later.'
+  }
+})
 // Setup uploads directory
 const uploadsDir = path.join(__dirname, '..', 'uploads');
 if (!fs.existsSync(uploadsDir)) {
@@ -28,12 +35,27 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ 
   storage: storage,
-  limits: { fileSize: 500 * 1024 * 1024 } // 500MB
+  limits: { fileSize: 500 * 1024 * 1024 }, // 500MB
+  fileFilter: (req, file, cb) => {
+    if(file.mimetype === 'application/x-rar-compressed'){
+      cb(null, true);
+    }
+    else{
+      const ext = path.extname(file.originalname).toLowerCase();
+      if (ext === '.rar') {
+        cb(null, true);
+      } else {
+        cb(new Error('Error: Only .rar file is accepted.'));
+      }
+    }
+  }
 });
 
 // Routes
-router.post('/auth', login);
+router.post('/auth', loginLimiter, login);
+router.post('/auth/refresh', refreshToken);
+router.post('/logout', logOut);
 router.post('/submissions', upload.single('file'), submitProduct);
-router.get('/submissions', verifyToken, getSubmissions);
+router.get('/submissions', verifyToken, verifyAdmin,  getSubmissions);
 
 export { router, uploadsDir };

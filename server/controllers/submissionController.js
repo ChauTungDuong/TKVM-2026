@@ -1,7 +1,8 @@
-import db from '../config/db.js';
+import dbPromise from '../config/db.js';
 
-export const submitProduct = (req, res) => {
+export const submitProduct = async (req, res) => {
   try {
+    const db = await dbPromise;
     const { teamName, unitName, topicName, instructor, phone, email } = req.body;
     const file = req.file;
 
@@ -9,25 +10,23 @@ export const submitProduct = (req, res) => {
       return res.status(400).json({ error: 'Vui lòng đính kèm file báo cáo.' });
     }
 
-    const stmt = db.prepare(`INSERT INTO submissions (teamName, unitName, topicName, instructor, phone, email, fileName, filePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
-    stmt.run(teamName, unitName, topicName, instructor || '', phone, email, file.filename, file.path, function(err) {
-      if (err) {
-        return res.status(500).json({ error: 'Lỗi khi lưu vào cơ sở dữ liệu.' });
-      }
-      res.status(201).json({ message: 'Nộp sản phẩm thành công!', id: this.lastID });
-    });
-    stmt.finalize();
+    const result = await db.run(`INSERT INTO submissions (teamName, unitName, topicName, instructor, phone, email, fileName, filePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, 
+      [teamName, unitName, topicName, instructor || '', phone, email, file.filename, file.path]);
+      
+    res.status(201).json({ message: 'Nộp sản phẩm thành công!', id: result.lastID });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Đã xảy ra lỗi server.' });
   }
 };
 
-export const getSubmissions = (req, res) => {
-  db.all('SELECT * FROM submissions ORDER BY createdAt DESC', [], (err, rows) => {
-    if (err) {
-      res.status(500).json({ error: 'Lỗi truy xuất cơ sở dữ liệu.' });
-    } else {
-      res.json(rows);
-    }
-  });
+export const getSubmissions = async (req, res) => {
+  try {
+    const db = await dbPromise;
+    const rows = await db.all('SELECT * FROM submissions ORDER BY createdAt DESC');
+    res.json(rows);
+  } catch(err) {
+    console.error(err);
+    res.status(500).json({ error: 'Lỗi truy xuất cơ sở dữ liệu.' });
+  }
 };

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 import './Admin.css';
 
 interface Submission {
@@ -58,14 +59,15 @@ export default function Admin() {
       });
 
       if (!res.ok) {
-        throw new Error('Mật khẩu không đúng');
+        throw new Error('Tài khoản hoặc mật khẩu không đúng');
       }
 
       const data = await res.json();
-      setToken(data.token);
-      localStorage.setItem('adminToken', data.token);
+      setToken(data.accessToken);
+      localStorage.setItem('adminToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
       setIsLoggedIn(true);
-      fetchSubmissions(data.token);
+      fetchSubmissions(data.accessToken);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -73,8 +75,19 @@ export default function Admin() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (refreshToken) {
+      // Optional: Call backend to revoke refresh token
+      await fetch('/api/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: refreshToken })
+      }).catch(() => {});
+    }
+    
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('refreshToken');
     setToken('');
     setIsLoggedIn(false);
     setSubmissions([]);
@@ -83,17 +96,48 @@ export default function Admin() {
   const fetchSubmissions = async (authToken: string) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/submissions', {
+      let res = await fetch('/api/submissions', {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }
       });
       
-      if (!res.ok) {
-        if (res.status === 401 || res.status === 403) {
+      // If token expired, try to refresh it
+      if (res.status === 401 || res.status === 403) {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (!refreshToken) {
           handleLogout();
-          throw new Error('Phiên đăng nhập hết hạn hoặc không hợp lệ.');
+          throw new Error('Phiên đăng nhập hết hạn.');
         }
+
+        const refreshRes = await fetch('/api/auth/refresh', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: refreshToken })
+        });
+
+        if (!refreshRes.ok) {
+          handleLogout();
+          throw new Error('Phiên đăng nhập hết hạn.');
+        }
+
+        const refreshData = await refreshRes.json();
+        const newAccessToken = refreshData.accessToken;
+        
+        // Save new token and retry fetching
+        setToken(newAccessToken);
+        localStorage.setItem('adminToken', newAccessToken);
+        
+        res = await fetch('/api/submissions', {
+          headers: {
+            'Authorization': `Bearer ${newAccessToken}`
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error('Không thể tải dữ liệu.');
+        }
+      } else if (!res.ok) {
         throw new Error('Không thể tải dữ liệu.');
       }
       
@@ -178,20 +222,30 @@ export default function Admin() {
     <div className="admin-dashboard">
       <div className="admin-header">
         <h1 className="page-title">Sản phẩm đã nộp</h1>
-        <button onClick={handleLogout} className="btn btn-outline">Đăng xuất</button>
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <Link to="/" className="btn btn-outline" style={{ textDecoration: 'none' }}>Trang chủ</Link>
+          <button onClick={handleLogout} className="btn btn-outline">Đăng xuất</button>
+        </div>
       </div>
 
       <section className="section-block">
         {error && <div className="alert alert-error">{error}</div>}
         
         <div className="admin-controls">
-          <input 
-            type="text" 
-            className="admin-search" 
-            placeholder="Tìm theo Tên đội, Đơn vị, Đề tài..." 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+          <div className="admin-search-wrapper">
+            <input 
+              type="text" 
+              className="admin-search" 
+              placeholder="Tìm theo Tên đội, Đơn vị, Đề tài..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <span className="search-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+              </svg>
+            </span>
+          </div>
           <div className="admin-sort">
             <label>Sắp xếp theo: </label>
             <select value={`${sortField}-${sortDir}`} onChange={(e) => {

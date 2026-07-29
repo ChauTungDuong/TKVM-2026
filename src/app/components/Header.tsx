@@ -47,6 +47,15 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          {!!localStorage.getItem('adminToken') && (
+            <Link
+              to="/admin"
+              className={`nav-link${location.pathname === '/admin' ? ' active' : ''}`}
+              style={{ color: 'var(--teal)', fontWeight: 600 }}
+            >
+              Admin
+            </Link>
+          )}
         </nav>
 
         {/* ── CTA ── */}
@@ -86,6 +95,16 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          {!!localStorage.getItem('adminToken') && (
+            <Link
+              to="/admin"
+              className={`mobile-nav-link${location.pathname === '/admin' ? ' active' : ''}`}
+              onClick={() => setMenuOpen(false)}
+              style={{ color: 'var(--teal)', fontWeight: 600 }}
+            >
+              Admin
+            </Link>
+          )}
           <a
             href={CONTEST.registerUrl}
             target="_blank"
