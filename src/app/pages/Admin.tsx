@@ -22,7 +22,7 @@ export default function Admin() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState('');
+  const [, setToken] = useState('');
 
   // Table controls state
   const [searchQuery, setSearchQuery] = useState('');
