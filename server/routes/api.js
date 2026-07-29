@@ -3,7 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import { submitProduct, getSubmissions } from '../controllers/submissionController.js';
+import { submitProduct, getSubmissions, deleteSubmissions } from '../controllers/submissionController.js';
 import { login, verifyToken, verifyAdmin, refreshToken, logOut } from '../controllers/authController.js';
 import rateLimit from 'express-rate-limit'
 const __filename = fileURLToPath(import.meta.url);
@@ -57,5 +57,6 @@ router.post('/auth/refresh', refreshToken);
 router.post('/logout', logOut);
 router.post('/submissions', upload.single('file'), submitProduct);
 router.get('/submissions', verifyToken, verifyAdmin,  getSubmissions);
+router.delete('/submissions', verifyToken, verifyAdmin, deleteSubmissions);
 
 export { router, uploadsDir };
