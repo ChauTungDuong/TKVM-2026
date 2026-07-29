@@ -23,6 +23,12 @@ export default function Admin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [, setToken] = useState('');
+  
+  // Selection and Delete State
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Table controls state
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,6 +51,56 @@ export default function Admin() {
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, sortField, sortDir]);
+
+  const toggleSelection = (id: number) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  };
+
+  const toggleAllOnPage = () => {
+    const pageIds = currentItems.map(item => item.id);
+    const allSelected = pageIds.length > 0 && pageIds.every(id => selectedIds.includes(id));
+    if (allSelected) {
+      setSelectedIds(prev => prev.filter(id => !pageIds.includes(id)));
+    } else {
+      const newSelections = pageIds.filter(id => !selectedIds.includes(id));
+      setSelectedIds(prev => [...prev, ...newSelections]);
+    }
+  };
+
+  const handleConfirmDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!deletePassword) {
+      setError('Vui lòng nhập mật khẩu xác nhận.');
+      return;
+    }
+    setIsDeleting(true);
+    setError('');
+    
+    try {
+      const token = localStorage.getItem('adminToken');
+      const res = await fetch('/api/submissions', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ ids: selectedIds, password: deletePassword })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Lỗi khi xóa.');
+      }
+      
+      setShowDeleteModal(false);
+      setDeletePassword('');
+      setSelectedIds([]);
+      if (token) fetchSubmissions(token);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -231,6 +287,39 @@ export default function Admin() {
       <section className="section-block">
         {error && <div className="alert alert-error">{error}</div>}
         
+        {showDeleteModal && (
+          <div className="admin-login-overlay" style={{ zIndex: 1100 }}>
+            <div className="admin-login-wrapper">
+              <div className="admin-login-container" style={{ maxWidth: '400px' }}>
+                <h3 style={{ color: '#c53030', marginBottom: '16px', fontSize: '1.25rem' }}>Xác nhận xóa</h3>
+                <p style={{ marginBottom: '20px' }}>Bạn đang chuẩn bị xóa <strong>{selectedIds.length}</strong> mục. Hành động này sẽ xóa vĩnh viễn dữ liệu và file đính kèm, không thể khôi phục.</p>
+                <form onSubmit={handleConfirmDelete} className="admin-login-form">
+                  <div className="form-group">
+                    <label htmlFor="deletePassword">Nhập mật khẩu Admin để xác nhận:</label>
+                    <input 
+                      type="password" 
+                      id="deletePassword" 
+                      value={deletePassword} 
+                      onChange={(e) => setDeletePassword(e.target.value)} 
+                      required 
+                      autoFocus
+                    />
+                  </div>
+                  <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
+                    <button type="button" className="btn btn-outline" style={{ flex: 1 }} onClick={() => {
+                      setShowDeleteModal(false);
+                      setDeletePassword('');
+                    }} disabled={isDeleting}>Hủy</button>
+                    <button type="submit" className="btn btn-primary" style={{ flex: 1, backgroundColor: '#c53030', color: 'white' }} disabled={isDeleting}>
+                      {isDeleting ? 'Đang xóa...' : 'Xóa vĩnh viễn'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="admin-controls">
           <div className="admin-search-wrapper">
             <input 
@@ -261,10 +350,27 @@ export default function Admin() {
           </div>
         </div>
 
+        {selectedIds.length > 0 && (
+          <div style={{ padding: '12px', backgroundColor: '#fff5f5', border: '1px solid #feb2b2', borderRadius: '8px', marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ color: '#c53030', fontWeight: 'bold' }}>Đã chọn {selectedIds.length} mục</span>
+            <button onClick={() => setShowDeleteModal(true)} className="btn btn-primary" style={{ backgroundColor: '#c53030', color: 'white', padding: '6px 16px', fontSize: '14px' }}>
+              Xóa mục đã chọn
+            </button>
+          </div>
+        )}
+
         <div className="table-responsive">
           <table className="admin-table">
             <thead>
               <tr>
+                <th style={{ width: '40px' }}>
+                  <input 
+                    type="checkbox" 
+                    onChange={toggleAllOnPage}
+                    checked={currentItems.length > 0 && currentItems.every(item => selectedIds.includes(item.id))}
+                    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                  />
+                </th>
                 <th>STT</th>
                 <th>Tên đội</th>
                 <th>Tên đơn vị</th>
@@ -277,15 +383,23 @@ export default function Admin() {
             <tbody>
               {loading && submissions.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center">Đang tải dữ liệu...</td>
+                  <td colSpan={8} className="text-center">Đang tải dữ liệu...</td>
                 </tr>
               ) : currentItems.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center">Chưa có dữ liệu phù hợp.</td>
+                  <td colSpan={8} className="text-center">Chưa có dữ liệu phù hợp.</td>
                 </tr>
               ) : (
                 currentItems.map((sub, index) => (
-                  <tr key={sub.id}>
+                  <tr key={sub.id} style={{ backgroundColor: selectedIds.includes(sub.id) ? '#f0fff4' : '' }}>
+                    <td>
+                      <input 
+                        type="checkbox" 
+                        checked={selectedIds.includes(sub.id)}
+                        onChange={() => toggleSelection(sub.id)}
+                        style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                      />
+                    </td>
                     <td>{startIndex + index + 1}</td>
                     <td><strong>{sub.teamName}</strong></td>
                     <td>{sub.unitName}</td>
