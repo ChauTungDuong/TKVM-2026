@@ -16,7 +16,7 @@ COPY . .
 RUN mkdir -p uploads
 
 # Expose the API port
-EXPOSE 3000
+EXPOSE 3030
 
 # Start the server
 CMD ["npm", "start"]

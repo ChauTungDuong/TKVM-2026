@@ -8,7 +8,9 @@ services:
     container_name: icd2026-backend
     restart: unless-stopped
     ports:
-      - "3030:3000"
+      - "3030:3030"
+    environment:
+      - PORT=3030
     volumes:
       - ./server/uploads:/app/uploads
       - ./server/database.sqlite:/app/database.sqlite
