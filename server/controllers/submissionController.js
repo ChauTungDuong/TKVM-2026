@@ -9,7 +9,14 @@ export const submitProduct = async (req, res) => {
     const file = req.file;
 
     if (!file) {
-      return res.status(400).json({ error: 'Vui lòng đính kèm file báo cáo.' });
+      return res.status(400).json({ error: 'Vui lòng đính kèm file báo cáo (.rar hoặc .zip).' });
+    }
+
+    if (!teamName || !unitName || !topicName || !phone || !email) {
+      if (file.path && fs.existsSync(file.path)) {
+        try { fs.unlinkSync(file.path); } catch (_) {}
+      }
+      return res.status(400).json({ error: 'Vui lòng điền đầy đủ các thông tin bắt buộc.' });
     }
 
     const result = await db.run(`INSERT INTO submissions (teamName, unitName, topicName, instructor, phone, email, fileName, filePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, 
@@ -17,8 +24,11 @@ export const submitProduct = async (req, res) => {
       
     res.status(201).json({ message: 'Nộp sản phẩm thành công!', id: result.lastID });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Đã xảy ra lỗi server.' });
+    if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+      try { fs.unlinkSync(req.file.path); } catch (_) {}
+    }
+    console.error('Error in submitProduct:', error);
+    res.status(500).json({ error: 'Đã xảy ra lỗi máy chủ khi lưu sản phẩm.' });
   }
 };
 

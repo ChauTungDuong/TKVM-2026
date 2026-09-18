@@ -83,7 +83,14 @@ export default function Submit() {
       });
 
       if (!response.ok) {
-        throw new Error('Có lỗi xảy ra khi nộp bài.');
+        let errorMsg = 'Có lỗi xảy ra khi nộp bài.';
+        try {
+          const errData = await response.json();
+          if (errData && errData.error) {
+            errorMsg = errData.error;
+          }
+        } catch (_) {}
+        throw new Error(errorMsg);
       }
 
       setSuccess('Nộp sản phẩm thành công!');
@@ -177,7 +184,7 @@ export default function Submit() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="file">File báo cáo sản phẩm (.rar) <span className="required">*</span></label>
+              <label htmlFor="file">File báo cáo sản phẩm (.rar, .zip) <span className="required">*</span></label>
               
               <div className="custom-file-upload">
                 <input 
@@ -187,7 +194,7 @@ export default function Submit() {
                   onChange={handleFileChange} 
                   required 
                   ref={fileInputRef}
-                  accept=".rar"
+                  accept=".rar,.zip"
                   style={{ display: 'none' }}
                 />
                 <button 
@@ -203,7 +210,7 @@ export default function Submit() {
                 </span>
               </div>
               
-              <small className="help-text">Gồm file PDF báo cáo-thuyết minh, file video demo sản phẩm, file thiết kế, .... nén lại thành 1 file .rar (Dung lượng tối đa 500MB)</small>
+              <small className="help-text">Gồm file PDF báo cáo-thuyết minh, file video demo sản phẩm, file thiết kế, .... nén lại thành 1 file .rar hoặc .zip (Dung lượng tối đa 500MB)</small>
             </div>
 
             <button type="submit" className="btn btn-primary btn-submit" disabled={isSubmitting}>
