@@ -7,10 +7,10 @@ export const CONTEST = {
   name: 'Thiết kế Vi mạch Bảo mật và An toàn Thông tin',
   shortName: 'TKVM',
   year: '2026',
-  dateRange: 'Tháng 6/2026 – Tháng 10/2026',
+  dateRange: 'Tháng 6/2026 – Tháng 11/2026',
   registerUrl: 'https://bit.ly/4nWUfCQ',
   contactEmail: '', // Tạm thời bỏ email theo yêu cầu (sau này sẽ thêm vào)
-  finalDate: new Date('2026-10-20T00:00:00'),
+  finalDate: new Date('2026-11-07T00:00:00'),
 };
 
 export const intro = `Cuộc thi Thiết kế vi mạch bảo mật và an toàn thông tin nhằm tạo môi trường học thuật cho sinh viên các trường đại học nghiên cứu, sáng tạo và vận dụng kiến thức chuyên ngành thiết kế vi mạch, an toàn thông tin vào thực tiễn. Góp phần phát hiện, bồi dưỡng và phát triển nguồn nhân lực chất lượng cao trong lĩnh vực thiết kế vi mạch, đặc biệt là thiết kế vi mạch bảo mật và an toàn phần cứng. Tăng cường kết nối, trao đổi chuyên môn giữa sinh viên với đội ngũ giảng viên, chuyên gia trong lĩnh vực thiết kế vi mạch và an toàn thông tin.`;
@@ -65,7 +65,7 @@ export const scheduleRows = [
     phase: 'final-prep',
   },
   {
-    time: '20/10/2026 – 31/10/2026',
+    time: '07/11/2026',
     task: 'Chung kết, trao giải',
     executor: 'Ban Tổ chức, Ban Giám khảo',
     result: 'Xếp hạng và trao giải',

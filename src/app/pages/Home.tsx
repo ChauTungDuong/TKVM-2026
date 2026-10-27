@@ -70,7 +70,7 @@ function useReveal() {
 const keywords = ['Bảo mật phần cứng', 'Sáng tạo vi mạch', 'An toàn thông tin', 'Thiết kế IC'];
 
 const quickInfoItems = [
-  { icon: <Calendar size={22} />, label: 'Thời gian', val: 'Tháng 6–10/2026' },
+  { icon: <Calendar size={22} />, label: 'Thời gian', val: 'Tháng 6–11/2026' },
   { icon: <MapPin size={22} />,   label: 'Địa điểm', val: 'Học viện KTMM, Hà Nội' },
   { icon: <Users size={22} />,    label: 'Nhóm',     val: 'Tối đa 5 thành viên' },
   { icon: <Award size={22} />,    label: 'Giải thưởng', val: '8 giải + chứng nhận' },
@@ -143,7 +143,7 @@ export default function Home() {
             <div className="home-info-row">
               <div className="info-chip">
                 <Calendar size={16} />
-                Tháng 6 – 10 / 2026
+                Tháng 6 – 11 / 2026
               </div>
               <div className="info-chip">
                 <MapPin size={16} />
@@ -174,7 +174,7 @@ export default function Home() {
               </div>
               <span className="countdown-eyebrow">Thời gian đếm ngược đến</span>
               <h2 className="countdown-heading">Vòng Chung Kết</h2>
-              <p className="countdown-date">20 / 10 / 2026</p>
+              <p className="countdown-date">07 / 11 / 2026</p>
               <div className="countdown-wrapper">
                 <CountdownTimer target={CONTEST.finalDate} />
               </div>

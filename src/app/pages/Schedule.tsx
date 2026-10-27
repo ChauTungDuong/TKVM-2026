@@ -27,7 +27,7 @@ export default function Schedule() {
       {/* ══════ INTRO ════════════════════════════════════════ */}
       <section className="section-block-teal" aria-label="Tổng quan thời gian">
         <p className="schedule-intro">
-          Cuộc thi diễn ra từ <strong>tháng 6/2026</strong> đến <strong>tháng 10/2026</strong>,
+          Cuộc thi diễn ra từ <strong>tháng 6/2026</strong> đến <strong>tháng 11/2026</strong>,
           bao gồm các giai đoạn từ phát động, đào tạo, nộp bài, vòng sơ loại đến chung kết và trao giải.
         </p>
       </section>
