@@ -1,55 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { ShieldCheck, Calendar, MapPin, Users, Award, BookOpen, Clock, ChevronRight } from 'lucide-react';
-import { CONTEST } from '../data/contestData';
+import { 
+  ShieldCheck, 
+  Calendar, 
+  MapPin, 
+  Users, 
+  Award, 
+  BookOpen, 
+  Clock, 
+  ChevronRight, 
+  Trophy, 
+  Sparkles 
+} from 'lucide-react';
+import { prizes } from '../data/contestData';
+import AwardCarousel from '../components/AwardCarousel';
 import './Home.css';
-
-// ── Countdown Timer component ─────────────────────────────────
-function CountdownTimer({ target }: { target: string | Date }) {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
-
-  useEffect(() => {
-    const targetDate = new Date(target).getTime();
-    const update = () => {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-      if (diff <= 0) {
-        setTimeLeft({ days: 0, hours: 0, mins: 0, secs: 0 });
-        return;
-      }
-      setTimeLeft({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        mins: Math.floor((diff / 1000 / 60) % 60),
-        secs: Math.floor((diff / 1000) % 60),
-      });
-    };
-    update();
-    const timer = setInterval(update, 1000);
-    return () => clearInterval(timer);
-  }, [target]);
-
-  return (
-    <div className="countdown">
-      <div className="countdown-unit">
-        <span className="countdown-val">{String(timeLeft.days).padStart(2, '0')}</span>
-        <span className="countdown-label">Ngày</span>
-      </div>
-      <div className="countdown-unit">
-        <span className="countdown-val">{String(timeLeft.hours).padStart(2, '0')}</span>
-        <span className="countdown-label">Giờ</span>
-      </div>
-      <div className="countdown-unit">
-        <span className="countdown-val">{String(timeLeft.mins).padStart(2, '0')}</span>
-        <span className="countdown-label">Phút</span>
-      </div>
-      <div className="countdown-unit">
-        <span className="countdown-val">{String(timeLeft.secs).padStart(2, '0')}</span>
-        <span className="countdown-label">Giây</span>
-      </div>
-    </div>
-  );
-}
 
 // ── Animate on scroll hook ────────────────────────────────────
 function useReveal() {
@@ -73,7 +38,7 @@ const quickInfoItems = [
   { icon: <Calendar size={22} />, label: 'Thời gian', val: 'Tháng 6–11/2026' },
   { icon: <MapPin size={22} />,   label: 'Địa điểm', val: 'Học viện KTMM, Hà Nội' },
   { icon: <Users size={22} />,    label: 'Nhóm',     val: 'Tối đa 5 thành viên' },
-  { icon: <Award size={22} />,    label: 'Giải thưởng', val: '8 giải + chứng nhận' },
+  { icon: <Award size={22} />,    label: 'Giải thưởng', val: '10 giải + chứng nhận' },
 ];
 
 const intro =
@@ -98,24 +63,20 @@ const targetAudience = [
 
 const quickLinks = [
   { path: '/thoigian',  label: 'Lịch trình thi',      desc: 'Chi tiết các mốc từ phát động đến Chung kết', icon: <Clock size={22} />,      color: 'teal' },
-  { path: '/hinhthuc',  label: 'Thể lệ & Quy định',   desc: 'Hồ sơ, yêu cầu sản phẩm và quy chế',         icon: <ShieldCheck size={22} />,color: 'amber' },
+  { path: '/giaithuong',label: 'Kết quả giải thưởng', desc: 'Danh sách 10 đội thi đoạt giải Chung kết',  icon: <Trophy size={22} />,     color: 'amber' },
+  { path: '/hinhthuc',  label: 'Thể lệ & Quy định',   desc: 'Hồ sơ, yêu cầu sản phẩm và quy chế',         icon: <ShieldCheck size={22} />,color: 'teal' },
   { path: '/noidung',   label: 'Nội dung & Tiêu chí', desc: 'Chủ đề bảo mật và bộ tiêu chí đánh giá',     icon: <BookOpen size={22} />,   color: 'navy' },
   { path: '/diadiem',   label: 'Địa điểm tổ chức',    desc: 'Sơ đồ, chỉ dẫn đến Học viện Kỹ thuật mật mã', icon: <MapPin size={22} />,     color: 'slate' },
 ];
 
-const prizes = [
-  { rank: 'Giải Nhất',        qty: '01', icon: '', type: 'first' },
-  { rank: 'Giải Nhì',         qty: '01', icon: '', type: 'second' },
-  { rank: 'Giải Ba',          qty: '02', icon: '', type: 'third' },
-  { rank: 'Giải Khuyến khích',qty: '04', icon: '', type: 'honorable' },
-];
-
 export default function Home() {
+  const awardsRef = useReveal();
   const infoRef   = useReveal();
   const introRef  = useReveal();
   const targetRef = useReveal();
   const qrRef     = useReveal();
   const linksRef  = useReveal();
+  const prizesRef = useReveal();
 
   return (
     <div className="home-page-seamless">
@@ -151,39 +112,59 @@ export default function Home() {
               </div>
             </div>
             <div className="home-button-group">
-              <a
-                href={CONTEST.registerUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary btn-lg"
-                id="home-register-btn"
-              >
-                Đăng ký ngay
-              </a>
+              <Link to="/giaithuong" className="btn btn-primary btn-lg" id="home-winners-btn">
+                <Trophy size={18} />
+                Xem kết quả giải thưởng
+              </Link>
               <Link to="/hinhthuc" className="btn btn-secondary btn-lg" id="home-rules-btn">
-                Xem thể lệ chi tiết
+                Xem thể lệ cuộc thi
               </Link>
             </div>
           </div>
 
-          {/* Right Block: Live Countdown Card (removed 5-member pill) */}
-          <div className="home-countdown-card">
+          {/* Right Block: Official Results Winner Announcement Card */}
+          <div className="home-countdown-card final-success-card">
             <div className="home-countdown-inner">
-              <div className="countdown-icon-badge">
-                <ShieldCheck size={28} />
+              <div className="countdown-icon-badge winner-trophy-badge">
+                <Trophy size={28} />
               </div>
-              <span className="countdown-eyebrow">Thời gian đếm ngược đến</span>
-              <h2 className="countdown-heading">Vòng Chung Kết</h2>
-              <p className="countdown-date">07 / 11 / 2026</p>
-              <div className="countdown-wrapper">
-                <CountdownTimer target={CONTEST.finalDate} />
+              <span className="countdown-eyebrow">
+                <Sparkles size={14} style={{ display: 'inline', marginRight: 4 }} />
+                CHUNG KẾT 07/11/2026
+              </span>
+              <h2 className="countdown-heading">Đã Có Kết Quả</h2>
+              <p className="countdown-date">Vinh danh 10 đội thi đoạt giải</p>
+              
+              <div className="final-winners-quick-pill">
+                <div className="winner-highlight-item gold">
+                  <span className="pill-rank">Giải Nhất:</span>
+                  <span className="pill-team">LQDTU Crypto</span>
+                </div>
+                <div className="winner-highlight-item silver">
+                  <span className="pill-rank">Giải Nhì:</span>
+                  <span className="pill-team">VLATsemi</span>
+                </div>
               </div>
+
+              <a href="#awards-section" className="btn btn-primary btn-sm final-jump-btn">
+                Xem chi tiết giải thưởng ↓
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══════ QUICK INFO STRIP (Seamless without box border) ════ */}
+      {/* ══════ AWARDS SPOTLIGHT SECTION (CAROUSEL) ════════════ */}
+      <section 
+        id="awards-section" 
+        className="home-awards-section animate-fade-up" 
+        ref={awardsRef} 
+        aria-label="Vinh danh giải thưởng cuộc thi"
+      >
+        <AwardCarousel showTitle={true} />
+      </section>
+
+      {/* ══════ QUICK INFO STRIP ══════════════════════════════ */}
       <section className="home-quick-info-strip animate-fade-up" ref={infoRef} aria-label="Thông tin nhanh">
         <div className="quick-info-grid">
           {quickInfoItems.map(item => (
@@ -219,27 +200,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════ ĐĂNG KÝ (QR) - Removed raw link string ══════════ */}
+      {/* ══════ ĐĂNG KÝ (QR) ═══════════════════════════════════ */}
       <section className="animate-fade-up" ref={qrRef} aria-labelledby="register-heading">
         <div className="qr-box">
-          <img src="/QR.png" alt="Mã QR đăng ký" />
+          <img src="/QR.png" alt="Mã QR cuộc thi" />
           <div className="qr-content">
-            <h2 id="register-heading" className="qr-title">Đăng ký trực tuyến</h2>
+            <h2 id="register-heading" className="qr-title">Cổng thông tin trực tuyến</h2>
             <p className="qr-desc">
-              Quét mã QR hoặc truy cập đường link để đăng ký dự thi.
-              Mỗi nhóm tối đa <strong>05 thành viên</strong>, mỗi nhóm đăng ký
-              tối đa <strong>01 sản phẩm</strong>.
+              Quét mã QR hoặc truy cập đường link để xem thông tin cuộc thi và cập nhật
+              những thông báo mới nhất từ Ban Tổ chức.
             </p>
             <div className="qr-link-row">
-              <a
-                href={CONTEST.registerUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/giaithuong"
                 className="btn btn-primary btn-lg"
-                id="qr-register-btn"
+                id="qr-awards-btn"
               >
-                Đăng ký ngay
-              </a>
+                <Trophy size={18} />
+                Xem kết quả giải thưởng
+              </Link>
             </div>
           </div>
         </div>
@@ -271,24 +250,26 @@ export default function Home() {
       </section>
 
       {/* ══════ PRIZES PREVIEW ════════════════════════════════ */}
-      <section className="home-prizes-section" aria-labelledby="prizes-heading">
+      <section className="home-prizes-section animate-fade-up" ref={prizesRef} aria-labelledby="prizes-heading">
         <div className="section-heading">
           <div className="section-heading-dot" />
-          <h2 id="prizes-heading">Cơ cấu giải thưởng</h2>
+          <h2 id="prizes-heading">Cơ cấu & Danh hiệu giải thưởng</h2>
         </div>
         <div className="prize-grid">
           {prizes.map(p => (
             <div key={p.rank} className={`prize-card ${p.type}`}>
               <div className="prize-icon">{p.icon}</div>
               <p className="prize-name">{p.rank}</p>
-              <p className="prize-qty">× {p.qty}</p>
+              <p className="prize-qty">× {p.qty} giải</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--slate)', marginTop: '6px' }}>{p.desc}</p>
             </div>
           ))}
         </div>
         <p className="prize-note">Tiền thưởng, giấy chứng nhận và biểu trưng cho mỗi giải.</p>
-        <div style={{ textAlign: 'center', marginTop: 'var(--space-5)' }}>
-          <Link to="/hinhthuc" className="btn btn-secondary" id="home-rules-link">
-            Xem chi tiết hình thức thi →
+        <div className="home-prizes-action-bar">
+          <Link to="/giaithuong" className="btn btn-primary btn-lg" id="home-view-all-prizes">
+            <Trophy size={18} />
+            Xem chi tiết 10 đội đoạt giải & hình ảnh trao giải →
           </Link>
         </div>
       </section>

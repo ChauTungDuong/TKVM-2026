@@ -173,11 +173,144 @@ export const rounds = [
   },
 ];
 
+export interface AwardTeam {
+  teamName: string;
+  school: string;
+}
+
+export interface AwardWinnerItem {
+  id: string;
+  rank: string;
+  shortRank: string;
+  type: 'first' | 'second' | 'third' | 'consolation' | 'prospect';
+  badgeColor: string;
+  badgeBg: string;
+  borderColor: string;
+  icon: string;
+  image: string;
+  prizeDesc: string;
+  teams: AwardTeam[];
+}
+
+export const awardWinners: AwardWinnerItem[] = [
+  {
+    id: 'giai-nhat',
+    rank: 'Giải Nhất',
+    shortRank: 'Nhất',
+    type: 'first',
+    badgeColor: '#b45309',
+    badgeBg: '#fef08a',
+    borderColor: '#eab308',
+    icon: '🏆',
+    image: '/images/giai/Slide_KQ_1_nhat.jpg',
+    prizeDesc: 'Biểu trưng Giải Nhất, Giấy chứng nhận và Tiền thưởng',
+    teams: [
+      {
+        teamName: 'LQDTU Crypto',
+        school: 'Học viện Kỹ thuật quân sự',
+      },
+    ],
+  },
+  {
+    id: 'giai-nhi',
+    rank: 'Giải Nhì',
+    shortRank: 'Nhì',
+    type: 'second',
+    badgeColor: '#334155',
+    badgeBg: '#e2e8f0',
+    borderColor: '#94a3b8',
+    icon: '🥈',
+    image: '/images/giai/Slide_KQ_2_nhi.jpg',
+    prizeDesc: 'Biểu trưng Giải Nhì, Giấy chứng nhận và Tiền thưởng',
+    teams: [
+      {
+        teamName: 'VLATsemi',
+        school: 'Đại học Bách Khoa Đà Nẵng',
+      },
+    ],
+  },
+  {
+    id: 'giai-ba',
+    rank: 'Giải Ba',
+    shortRank: 'Ba',
+    type: 'third',
+    badgeColor: '#9a3412',
+    badgeBg: '#ffedd5',
+    borderColor: '#f97316',
+    icon: '🥉',
+    image: '/images/giai/Slide_KQ_3_ba.jpg',
+    prizeDesc: 'Biểu trưng Giải Ba, Giấy chứng nhận và Tiền thưởng (02 giải)',
+    teams: [
+      {
+        teamName: 'Crypto-KDA',
+        school: 'Trường ĐH KHTN, ĐHQG TP Hồ Chí Minh',
+      },
+      {
+        teamName: 'KMA-IC',
+        school: 'Học viện Kỹ thuật mật mã',
+      },
+    ],
+  },
+  {
+    id: 'giai-khuyen-khich',
+    rank: 'Giải Khuyến khích',
+    shortRank: 'Khuyến khích',
+    type: 'consolation',
+    badgeColor: '#0369a1',
+    badgeBg: '#e0f2fe',
+    borderColor: '#38bdf8',
+    icon: '🎖️',
+    image: '/images/giai/Slide_KQ_4_kk.jpg',
+    prizeDesc: 'Biểu trưng Giải Khuyến khích, Giấy chứng nhận và Tiền thưởng (04 giải)',
+    teams: [
+      {
+        teamName: 'BK KEM',
+        school: 'Trường ĐHBK, ĐHQG TP Hồ Chí Minh',
+      },
+      {
+        teamName: 'ICTU1',
+        school: 'Trường Đại học Công nghệ Thông tin và Truyền thông, Đại học Thái Nguyên',
+      },
+      {
+        teamName: 'Bulbasaur',
+        school: 'Đại học FPT',
+      },
+      {
+        teamName: 'EICD',
+        school: 'Học viện Công nghệ Bưu chính Viễn thông',
+      },
+    ],
+  },
+  {
+    id: 'giai-trien-vong',
+    rank: 'Giải Triển vọng',
+    shortRank: 'Triển vọng',
+    type: 'prospect',
+    badgeColor: '#6b21a8',
+    badgeBg: '#f3e8ff',
+    borderColor: '#a855f7',
+    icon: '⭐',
+    image: '/images/giai/Slide_KQ_5_tv.jpg',
+    prizeDesc: 'Biểu trưng Giải Triển vọng, Giấy chứng nhận và Quà tặng (02 giải)',
+    teams: [
+      {
+        teamName: 'Steve Jobs Việt Nam',
+        school: 'Trường Đại học Quốc tế, ĐHQG Tp Hồ Chí Minh',
+      },
+      {
+        teamName: 'Secure Fabric - T07',
+        school: 'Học viện Kỹ thuật và Công nghệ an ninh',
+      },
+    ],
+  },
+];
+
 export const prizes = [
-  { rank: 'Giải Nhất', qty: 1, icon: '', type: 'first', desc: 'Tiền thưởng, giấy chứng nhận và biểu trưng' },
-  { rank: 'Giải Nhì', qty: 1, icon: '', type: 'second', desc: 'Tiền thưởng, giấy chứng nhận và biểu trưng' },
-  { rank: 'Giải Ba', qty: 2, icon: '', type: 'third', desc: 'Tiền thưởng, giấy chứng nhận và biểu trưng' },
-  { rank: 'Giải Khuyến khích', qty: 4, icon: '', type: 'consolation', desc: 'Tiền thưởng, giấy chứng nhận và biểu trưng' },
+  { rank: 'Giải Nhất', qty: 1, icon: '🏆', type: 'first', desc: 'Tiền thưởng, giấy chứng nhận và biểu trưng' },
+  { rank: 'Giải Nhì', qty: 1, icon: '🥈', type: 'second', desc: 'Tiền thưởng, giấy chứng nhận và biểu trưng' },
+  { rank: 'Giải Ba', qty: 2, icon: '🥉', type: 'third', desc: 'Tiền thưởng, giấy chứng nhận và biểu trưng' },
+  { rank: 'Giải Khuyến khích', qty: 4, icon: '🎖️', type: 'consolation', desc: 'Tiền thưởng, giấy chứng nhận và biểu trưng' },
+  { rank: 'Giải Triển vọng', qty: 2, icon: '⭐', type: 'prospect', desc: 'Tiền thưởng, giấy chứng nhận và biểu trưng' },
 ];
 
 export const navLinks = [

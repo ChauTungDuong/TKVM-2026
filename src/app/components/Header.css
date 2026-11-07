@@ -144,3 +144,38 @@
 .mobile-nav-link.active { background: var(--teal-light); color: var(--teal); }
 
 .mobile-cta { margin-top: var(--space-2); justify-content: center; }
+
+/* ── Awards Nav Highlights ── */
+.nav-link.nav-link-awards {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-awards-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber);
+  display: inline-block;
+  margin-left: 6px;
+  box-shadow: 0 0 6px rgba(230, 168, 23, 0.9);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.65;
+  }
+}
+

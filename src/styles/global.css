@@ -433,7 +433,7 @@ p  { line-height: 1.75; }
   .prize-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 1024px) {
-  .prize-grid { grid-template-columns: repeat(4, 1fr); }
+  .prize-grid { grid-template-columns: repeat(5, 1fr); }
 }
 .prize-card {
   background: var(--white);
@@ -447,7 +447,8 @@ p  { line-height: 1.75; }
 .prize-card.first  { border-color: #FFD700; background: linear-gradient(135deg,#fffbe6,#fff8d0); }
 .prize-card.second { border-color: #C0C0C0; background: linear-gradient(135deg,#f5f5f5,#ebebeb); }
 .prize-card.third  { border-color: #CD7F32; background: linear-gradient(135deg,#fdf1e8,#f9e5d0); }
-.prize-card.consolation { border-color: var(--border); background: var(--paper); }
+.prize-card.consolation { border-color: #38bdf8; background: linear-gradient(135deg,#f0f9ff,#e0f2fe); }
+.prize-card.prospect    { border-color: #c084fc; background: linear-gradient(135deg,#faf5ff,#f3e8ff); }
 .prize-icon { font-size: 2rem; margin-bottom: var(--space-2); }
 .prize-name { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; color: var(--navy); }
 .prize-qty  { font-size: 1.05rem; color: var(--slate); margin-top: 4px; }

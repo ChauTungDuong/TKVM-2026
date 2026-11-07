@@ -328,3 +328,84 @@
   flex-direction: column;
 }
 .prize-note { text-align: center; font-size: 0.92rem; color: var(--slate); margin-top: var(--space-4); }
+
+.home-prizes-action-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-6);
+}
+
+/* ── Awards Spotlight Section on Homepage ── */
+.home-awards-section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-sm);
+  border-top: 4px solid var(--amber);
+}
+
+@media (max-width: 575px) {
+  .home-awards-section {
+    padding: var(--space-6) var(--space-4);
+  }
+}
+
+/* ── Final Results Success Card ── */
+.final-success-card {
+  background: linear-gradient(135deg, #06172a 0%, #0d2f4d 60%, #163d5e 100%);
+  border: 1.5px solid rgba(230, 168, 23, 0.45);
+  box-shadow: 0 12px 36px rgba(11, 39, 64, 0.25);
+}
+
+.winner-trophy-badge {
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.3) 0%, rgba(234, 179, 8, 0.1) 100%);
+  border: 1.5px solid #eab308;
+  color: #facc15;
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.35);
+}
+
+.final-winners-quick-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.winner-highlight-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  backdrop-filter: blur(4px);
+}
+
+.winner-highlight-item.gold {
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  color: #fef08a;
+}
+
+.winner-highlight-item.silver {
+  background: rgba(226, 232, 240, 0.12);
+  border: 1px solid rgba(226, 232, 240, 0.3);
+  color: #f1f5f9;
+}
+
+.pill-rank {
+  font-weight: 700;
+}
+
+.pill-team {
+  font-weight: 800;
+  font-family: var(--font-display);
+}
+
+.final-jump-btn {
+  margin-top: var(--space-2);
+  box-shadow: 0 4px 14px rgba(230, 168, 23, 0.4);
+}
+

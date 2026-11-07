@@ -42,9 +42,10 @@ export default function Header() {
             <Link
               key={link.path}
               to={link.path}
-              className={`nav-link${location.pathname === link.path ? ' active' : ''}`}
+              className={`nav-link${location.pathname === link.path ? ' active' : ''}${link.path === '/giaithuong' ? ' nav-link-awards' : ''}`}
             >
               {link.label}
+              {link.path === '/giaithuong' && <span className="nav-awards-dot" title="Đã có kết quả giải thưởng" />}
             </Link>
           ))}
           {!!localStorage.getItem('adminToken') && (
@@ -92,7 +93,8 @@ export default function Header() {
               className={`mobile-nav-link${location.pathname === link.path ? ' active' : ''}`}
               onClick={() => setMenuOpen(false)}
             >
-              {link.label}
+              <span>{link.label}</span>
+              {link.path === '/giaithuong' && <span className="nav-awards-dot" />}
             </Link>
           ))}
           {!!localStorage.getItem('adminToken') && (

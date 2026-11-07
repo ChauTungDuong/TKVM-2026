@@ -29,3 +29,6 @@ server/uploads/
 server/database.sqlite
 *.md
 */.env
+
+# Raw assets source folder
+/giai/
